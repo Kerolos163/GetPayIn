@@ -18,7 +18,7 @@ export default StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    margin: 12,
+    marginTop: 16,
     borderWidth: 1,
     padding: 10,
     width: "90%",
@@ -32,6 +32,7 @@ export default StyleSheet.create({
     color: "#009C94",
     textDecorationLine: "underline",
     fontSize: 14,
+    marginTop: 12,
   },
   signUp: {
     color: "#009C94",
@@ -52,5 +53,9 @@ export default StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     fontSize: 18,
+  },
+  password: {
+    position: "relative",
+    width: "90%",
   },
 });

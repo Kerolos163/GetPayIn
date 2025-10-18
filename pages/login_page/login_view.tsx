@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,8 +7,10 @@ import {
   TouchableOpacity,
 } from "react-native";
 import style from "./login_style";
+import { Feather } from "@expo/vector-icons";
 
 const LoginScreen = () => {
+  const [hidden, setHidden] = useState(true);
   return (
     <KeyboardAvoidingView style={style.body} behavior="padding">
       <View style={style.container}>
@@ -18,7 +20,26 @@ const LoginScreen = () => {
           selectionColor="#009c9475"
           placeholder="Email"
         ></TextInput>
-        <TextInput style={style.input} placeholder="Password"></TextInput>
+        <View style={style.password}>
+          <TextInput
+            style={[style.input, { width: "100%" }]}
+            placeholder="Password"
+            secureTextEntry={hidden}
+          ></TextInput>
+
+          <TouchableOpacity
+            style={{ position: "absolute", right: 18, top: 32 }}
+            onPress={() => {
+              setHidden(!hidden);
+            }}
+          >
+            <Feather
+              name={hidden ? "eye-off" : "eye"}
+              size={20}
+              color="#009c94"
+            />
+          </TouchableOpacity>
+        </View>
         <Text style={style.forgetPassword}>Forget password</Text>
         <TouchableOpacity
           style={style.loginButton}

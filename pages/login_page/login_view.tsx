@@ -12,8 +12,8 @@ import { Feather } from "@expo/vector-icons";
 const LoginScreen = () => {
   const [hidden, setHidden] = useState(true);
   return (
-    <KeyboardAvoidingView style={style.body} behavior="padding">
-      <View style={style.container}>
+    <View style={style.body}>
+      <KeyboardAvoidingView style={style.container} behavior="padding">
         <Text style={style.text}>welcome back</Text>
         <TextInput
           style={style.input}
@@ -47,8 +47,14 @@ const LoginScreen = () => {
         >
           <Text style={style.loginText}>Login</Text>
         </TouchableOpacity>
-      </View>
-      <Text style={{ textAlign: "center", marginTop: 10 }}>
+      </KeyboardAvoidingView>
+      <Text
+        style={{
+          textAlign: "center",
+          backgroundColor: "white",
+          paddingBottom: 30,
+        }}
+      >
         I don't have an account?{" "}
         <Text
           style={style.signUp}
@@ -59,7 +65,7 @@ const LoginScreen = () => {
           Sign up
         </Text>
       </Text>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 

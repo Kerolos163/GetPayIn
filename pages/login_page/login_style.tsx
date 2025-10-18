@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-  body: { flex: 1, padding: 20 },
+  body: { flex: 2 },
   container: {
     flex: 1,
     backgroundColor: "white",

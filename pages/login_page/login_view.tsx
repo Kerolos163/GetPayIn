@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
   View,
   Text,
@@ -6,11 +6,18 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
 } from "react-native";
+import { useNavigation, NavigationProp } from "@react-navigation/native";
 import style from "./login_style";
 import { Feather } from "@expo/vector-icons";
 
 const LoginScreen = () => {
   const [hidden, setHidden] = useState(true);
+  const navigation: NavigationProp<any> = useNavigation();
+
+  const handleLogin = useCallback(() => {
+    navigation.navigate("Product");
+  }, [navigation]);
+
   return (
     <View style={style.body}>
       <KeyboardAvoidingView style={style.container} behavior="padding">
@@ -41,10 +48,7 @@ const LoginScreen = () => {
           </TouchableOpacity>
         </View>
         <Text style={style.forgetPassword}>Forget password</Text>
-        <TouchableOpacity
-          style={style.loginButton}
-          onPress={() => console.warn("Login")}
-        >
+        <TouchableOpacity style={style.loginButton} onPress={handleLogin}>
           <Text style={style.loginText}>Login</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
@@ -59,7 +63,7 @@ const LoginScreen = () => {
         <Text
           style={style.signUp}
           onPress={() => {
-            console.log("Sign up");
+            console.log("sign up");
           }}
         >
           Sign up

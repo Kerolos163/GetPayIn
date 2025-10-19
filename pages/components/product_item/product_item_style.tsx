@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    position: "relative",
   },
   image: { width: 120, height: 120, resizeMode: "cover" },
   containerInfo: {
@@ -45,11 +46,21 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     width: "100%",
   },
-  price:{
+  price: {
     fontSize: 16,
     fontWeight: "bold",
     color: "#009C94",
-  }
+  },
+  rating: {
+    position: "absolute",
+    top: -5,
+    right: -5,
+    backgroundColor: "#FFD700",
+    borderRadius: 12,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    transform: [{ rotate: "30deg" }],
+  },
 });
 
 export default styles;

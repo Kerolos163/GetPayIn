@@ -14,6 +14,9 @@ const ProductItemComponent = ({ data }: { data: ProductModel }) => {
         </Text>
         <Text style={styles.price}>{data.price} $</Text>
       </View>
+      <View style={styles.rating}>
+        <Text >{data.rating}</Text>
+      </View>
     </View>
   );
 };

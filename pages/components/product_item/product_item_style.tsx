@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-
 const styles = StyleSheet.create({
   container: {
     width: "49%",
@@ -27,10 +26,30 @@ const styles = StyleSheet.create({
   containerInfo: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "flex-start",
     width: "100%",
   },
+  title: {
+    fontWeight: "bold",
+    fontSize: 16,
+    color: "#009C94",
+    textAlign: "center",
+    textTransform: "capitalize",
+    width: "100%",
+    marginBottom: 10,
+  },
+  description: {
+    fontSize: 14,
+    color: "#555",
+    marginBottom: 10,
+    width: "100%",
+  },
+  price:{
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#009C94",
+  }
 });
 
 export default styles;

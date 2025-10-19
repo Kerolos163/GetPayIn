@@ -8,8 +8,11 @@ const ProductItemComponent = ({ data }: { data: ProductModel }) => {
     <View style={styles.container}>
       <Image source={{ uri: data.image }} style={styles.image} />
       <View style={styles.containerInfo}>
-        <Text>{data.title}</Text>
-        <Text>{data.price}</Text>
+        <Text style={styles.title}> {data.title}</Text>
+        <Text style={styles.description} numberOfLines={3} ellipsizeMode="tail">
+          {data.description}
+        </Text>
+        <Text style={styles.price}>{data.price} $</Text>
       </View>
     </View>
   );

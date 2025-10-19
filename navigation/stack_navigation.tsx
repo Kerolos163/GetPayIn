@@ -7,19 +7,18 @@ import ProductView from "../pages/product_page/product_view";
 
 const Stack = createNativeStackNavigator();
 export default function MyStack() {
-  const [initialRoute, setInitialRoute] = useState("Login");
+  const [initialRoute, setInitialRoute] = useState("");
 
   useEffect(() => {
     async function checkToken() {
       const token = await MMKV.getString(constant.token);
-      if (token) {
-        setInitialRoute("Product");
-      } else {
-        setInitialRoute("Login");
-      }
+
+      setInitialRoute(token ? "Product" : "Login");
     }
     checkToken();
-  }, []);
+  }, [initialRoute]);
+
+  if (!initialRoute) return null;
 
   return (
     <Stack.Navigator initialRouteName={initialRoute}>

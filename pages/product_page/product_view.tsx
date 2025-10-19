@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { View, FlatList } from "react-native";
+import { View, FlatList, Image } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import constant from "../../utils/constant";
@@ -8,6 +8,7 @@ import styles from "./product_style";
 import ProductItemComponent from "../components/product_item/product_item_component";
 import CategoryFilterStyle from "../components/category_filter/category_filter_component";
 import { setProducts } from "../../store/slices/productSlice";
+import NetInfo from "@react-native-community/netinfo";
 
 const ProductView = () => {
   const dispatch = useDispatch();
@@ -15,13 +16,21 @@ const ProductView = () => {
   const selectedCategory = useSelector(
     (state: any) => state.category.selectedCategory
   );
+  const [isConnected, setIsConnected] = useState(true);
 
   useEffect(() => {
-    console.log("Selected Category in ProductView:", selectedCategory);
+    console.log("isConnected", isConnected);
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      setIsConnected(state.isConnected ?? false);
+    });
     const fetchData = async () => {
       const response = await axios.get(`${constant.baseUrl}/products`);
-      const products: ProductModel[] = response.data.products.filter((item: any) => item.category === selectedCategory||selectedCategory==="").map(
-        (item: any) => ({
+      const products: ProductModel[] = response.data.products
+        .filter(
+          (item: any) =>
+            item.category === selectedCategory || selectedCategory === ""
+        )
+        .map((item: any) => ({
           id: item.id ?? Math.random(),
           title: item.title ?? "",
           price: item.price ?? 0,
@@ -29,14 +38,24 @@ const ProductView = () => {
           rating: item.rating ?? 0,
           category: item.category ?? "",
           image: item.thumbnail ?? "",
-        })
-      );
-      console.log("Fetched Products:", products);
+        }));
 
       dispatch(setProducts(products));
+      return () => unsubscribe();
     };
     fetchData();
-  }, [selectedCategory]);
+  }, [isConnected, selectedCategory]);
+
+  if (!isConnected) {
+    return (
+      <View style={styles.body}>
+        <Image
+          source={require("../../assets/No connection-bro.png")}
+          style={{ width: "100%", height: "100%", resizeMode: "contain" }}
+        />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.body}>

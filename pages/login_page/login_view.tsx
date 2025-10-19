@@ -9,29 +9,84 @@ import {
 import { useNavigation, NavigationProp } from "@react-navigation/native";
 import style from "./login_style";
 import { Feather } from "@expo/vector-icons";
+import axios from "axios";
+import constant from "../../utils/constant";
+import Toast from "react-native-toast-message";
 
 const LoginScreen = () => {
   const [hidden, setHidden] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailErrorMessage, setemailEErrorMessage] = useState("");
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+
   const navigation: NavigationProp<any> = useNavigation();
 
-  const handleLogin = useCallback(() => {
-    navigation.navigate("Product");
-  }, [navigation]);
+  const handleLogin = useCallback(async () => {
+    if (!email) setemailEErrorMessage("Email is required");
+    if (!password) setPasswordErrorMessage("Password is required");
+
+    if (!email || !password) {
+      setTimeout(() => {
+        setemailEErrorMessage("");
+        setPasswordErrorMessage("");
+      }, 5000);
+      return;
+    }
+
+    try {
+      const response = await axios.post(`${constant.baseUrl}/auth/login`, {
+        username: email,
+        password,
+      });
+
+      console.warn(response.data.accessToken);
+      navigation.navigate("Product");
+    } catch (err: any) {
+      Toast.show({
+        type: "error",
+        position: "bottom",
+        text1: err.response.data.message,
+      });
+    }
+  }, [email, password, navigation]);
 
   return (
     <View style={style.body}>
       <KeyboardAvoidingView style={style.container} behavior="padding">
         <Text style={style.text}>welcome back</Text>
         <TextInput
-          style={style.input}
+          style={[
+            style.input,
+            { borderColor: emailErrorMessage ? "red" : "#009C94" },
+          ]}
           selectionColor="#009c9475"
           placeholder="Email"
+          value={email}
+          onChangeText={(e) => {
+            setEmail(e);
+          }}
         ></TextInput>
+        {emailErrorMessage && (
+          <Text style={{ color: "red", textAlign: "left", width: "90%" }}>
+            {emailErrorMessage}
+          </Text>
+        )}
         <View style={style.password}>
           <TextInput
-            style={[style.input, { width: "100%" }]}
+            style={[
+              style.input,
+              {
+                width: "100%",
+                borderColor: emailErrorMessage ? "red" : "#009C94",
+              },
+            ]}
             placeholder="Password"
             secureTextEntry={hidden}
+            value={password}
+            onChangeText={(e) => {
+              setPassword(e);
+            }}
           ></TextInput>
 
           <TouchableOpacity
@@ -47,6 +102,11 @@ const LoginScreen = () => {
             />
           </TouchableOpacity>
         </View>
+        {passwordErrorMessage && (
+          <Text style={{ color: "red", textAlign: "left", width: "90%" }}>
+            {passwordErrorMessage}
+          </Text>
+        )}
         <Text style={style.forgetPassword}>Forget password</Text>
         <TouchableOpacity style={style.loginButton} onPress={handleLogin}>
           <Text style={style.loginText}>Login</Text>

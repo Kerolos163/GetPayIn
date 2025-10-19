@@ -24,6 +24,7 @@ export default StyleSheet.create({
     width: "90%",
     borderRadius: 10,
     fontSize: 18,
+    borderColor: "#009C94",
   },
   forgetPassword: {
     textAlign: "right",

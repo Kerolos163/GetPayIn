@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     width: "49%",
+    minWidth: "49%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -22,6 +23,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     position: "relative",
+  
   },
   image: { width: 120, height: 120, resizeMode: "cover" },
   containerInfo: {

@@ -5,17 +5,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     paddingTop: 40,
-        paddingHorizontal: 4,
+    paddingHorizontal: 4,
   },
   container: {
     flex: 1,
     backgroundColor: "white",
-
   },
   contentContainerStyle: {
     padding: 10,
     justifyContent: "space-between",
-    alignItems: "center",
     paddingBottom: 50,
   },
 });

@@ -4,10 +4,19 @@ import axios from "axios";
 import constant from "../../../utils/constant";
 import CategoryModel from "../../../model/category_model";
 import styles from "./category_filter_style";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setSelectedCategory,
+  setCategories,
+} from "../../../store/slices/categorySlice";
 
 const CategoryFilterStyle = () => {
-  const [data, setData] = useState<CategoryModel[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const dispatch = useDispatch();
+  const data = useSelector((state: any) => state.category.categories);
+  const selectedCategory = useSelector(
+    (state: any) => state.category.selectedCategory
+  );
+
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -20,7 +29,7 @@ const CategoryFilterStyle = () => {
           name: item.name ?? "",
         }));
         // console.warn("Categories Data👉", categories);
-        setData(categories);
+        dispatch(setCategories(categories));
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
@@ -29,8 +38,11 @@ const CategoryFilterStyle = () => {
   }, []);
 
   const handleCategoryPress = (slug: string) => {
-    setSelectedCategory(slug);
-    console.log("Selected Category Slug:", selectedCategory);
+    if (slug === selectedCategory) {
+      dispatch(setSelectedCategory(""));
+    } else {
+      dispatch(setSelectedCategory(slug));
+    }
   };
 
   return (

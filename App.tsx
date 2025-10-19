@@ -1,13 +1,16 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Provider } from "react-redux";
+import store from "./store/store";
 import MyStack from "./navigation/stack_navigation";
 import Toast from "react-native-toast-message";
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <MyStack />
-      <Toast />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <MyStack />
+        <Toast />
+      </NavigationContainer>
+    </Provider>
   );
 }

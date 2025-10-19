@@ -12,6 +12,7 @@ import { Feather } from "@expo/vector-icons";
 import axios from "axios";
 import constant from "../../utils/constant";
 import Toast from "react-native-toast-message";
+import MMKV from "../../utils/MMKV";
 
 const LoginScreen = () => {
   const [hidden, setHidden] = useState(true);
@@ -23,6 +24,7 @@ const LoginScreen = () => {
   const navigation: NavigationProp<any> = useNavigation();
 
   const handleLogin = useCallback(async () => {
+    console.log("login pressed");
     if (!email) setemailEErrorMessage("Email is required");
     if (!password) setPasswordErrorMessage("Password is required");
 
@@ -40,7 +42,7 @@ const LoginScreen = () => {
         password,
       });
 
-      console.warn(response.data.accessToken);
+      MMKV.setString(constant.token, response.data.accessToken);
       navigation.navigate("Product");
     } catch (err: any) {
       Toast.show({
@@ -78,7 +80,7 @@ const LoginScreen = () => {
               style.input,
               {
                 width: "100%",
-                borderColor: emailErrorMessage ? "red" : "#009C94",
+                borderColor: passwordErrorMessage ? "red" : "#009C94",
               },
             ]}
             placeholder="Password"

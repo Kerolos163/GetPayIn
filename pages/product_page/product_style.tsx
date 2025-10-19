@@ -3,9 +3,14 @@ import { StyleSheet, View } from "react-native";
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    paddingTop: 28,
     backgroundColor: "white",
-    paddingHorizontal: 4,
+    paddingTop: 40,
+        paddingHorizontal: 4,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+
   },
   contentContainerStyle: {
     padding: 10,

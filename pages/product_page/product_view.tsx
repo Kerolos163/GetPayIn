@@ -5,6 +5,7 @@ import constant from "../../utils/constant";
 import ProductModel from "../../model/product_model";
 import styles from "./product_style";
 import ProductItemComponent from "../components/product_item/product_item_component";
+import CategoryFilterStyle from "../components/category_filter/category_filter_component";
 
 const ProductView = () => {
   const [data, setData] = useState<ProductModel[]>([]);
@@ -30,16 +31,19 @@ const ProductView = () => {
   }, []);
 
   return (
-    <FlatList
-      style={styles.body}
-      data={data}
-      contentContainerStyle={styles.contentContainerStyle}
-      numColumns={2}
-      renderItem={({ item }) => (
-        <ProductItemComponent key={item.id} data={item} />
-      )}
-      keyExtractor={(item) => item.id.toString()}
-    />
+    <View style={styles.body}>
+      <CategoryFilterStyle></CategoryFilterStyle>
+      <FlatList
+        style={styles.container}
+        data={data}
+        contentContainerStyle={styles.contentContainerStyle}
+        numColumns={2}
+        renderItem={({ item }) => (
+          <ProductItemComponent key={item.id} data={item} />
+        )}
+        keyExtractor={(item) => item.id.toString()}
+      />
+    </View>
   );
 };
 

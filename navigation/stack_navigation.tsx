@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import MMKV from "../utils/MMKV";
 import constant from "../utils/constant";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import LoginScreen from "../pages/login_page/login_view";
-import ProductView from "../pages/product_page/product_view";
+import LoginScreen from "../screens/login/login_view";
+import ProductView from "../screens/product/product_view";
 
 const Stack = createNativeStackNavigator();
 export default function MyStack() {

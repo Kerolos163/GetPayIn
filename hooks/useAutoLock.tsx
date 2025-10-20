@@ -13,6 +13,7 @@ const useAutoLock = (onAutoLock: () => void, autoLockTime: number = 10000) => {
     //? Set a new timer
     timerRef.current = setTimeout(() => {
       onAutoLock();
+      resetTimer();
     }, autoLockTime);
   };
 

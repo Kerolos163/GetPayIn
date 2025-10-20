@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import styles from "./LockOverlay_style";
 import { useSelector, useDispatch } from "react-redux";
 import { setLocked } from "../../store/slices/lockSlice";
@@ -25,7 +25,7 @@ const LockOverlayView = () => {
         return;
       }
       const { success } = await rnBiometrics.simplePrompt({
-        promptMessage: "Unlock with Biometrics",
+        promptMessage: "Unlock",
       });
       if (success) {
         dispatch(setLocked(false));
@@ -47,7 +47,10 @@ const LockOverlayView = () => {
   };
   return (
     <View style={styles.body}>
-      <Text>LockOverlayView</Text>
+      <Image
+        source={require("../../assets/lock.png")}
+        style={{ width: "50%", height: "50%", resizeMode: "contain" }}
+      />
       <TouchableOpacity
         onPress={handleUnlock}
         style={{

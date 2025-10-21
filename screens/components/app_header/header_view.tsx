@@ -12,7 +12,7 @@ const HeaderView = () => {
     MMKV.removeItem(constant.token);
     navigation.reset({
       index: 0,
-      routes: [{ name: "Login" }],
+      routes: [{ name: "Login" as never }],
     });
   };
   return (

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { FlatList, Text, TouchableOpacity } from "react-native";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import axios from "axios";
 import constant from "../../../utils/constant";
 import CategoryModel from "../../../model/category_model";
 import styles from "./category_filter_style";
 import { useDispatch, useSelector } from "react-redux";
+import { useQuery } from "@tanstack/react-query";
+import { ActivityIndicator } from "react-native";
 import {
   setSelectedCategory,
   setCategories,
@@ -12,11 +14,9 @@ import {
 
 const CategoryFilterStyle = () => {
   const dispatch = useDispatch();
-  const data = useSelector((state: any) => state.category.categories);
   const selectedCategory = useSelector(
     (state: any) => state.category.selectedCategory
   );
-
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -36,6 +36,22 @@ const CategoryFilterStyle = () => {
     };
     fetchCategories();
   }, []);
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["categories"],
+    queryFn: async () => {
+      const response = await axios.get(
+        `${constant.baseUrl}/products/categories`
+      );
+      const categories: CategoryModel[] = response.data.map((item: any) => ({
+        slug: item.slug ?? "",
+        name: item.name ?? "",
+      }));
+      dispatch(setCategories(categories));
+      return categories;
+    },
+  });
+  if (isLoading) return <ActivityIndicator></ActivityIndicator>;
 
   const handleCategoryPress = (slug: string) => {
     if (slug === selectedCategory) {

@@ -20,6 +20,11 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 15,
   },
+    errorText: {
+    color: "red",
+    fontSize: 18,
+    textAlign: "center",
+  }
 });
 
 export default styles;

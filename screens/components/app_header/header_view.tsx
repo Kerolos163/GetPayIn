@@ -5,7 +5,7 @@ import constant from "../../../utils/constant";
 import { useNavigation } from "@react-navigation/native";
 import styles from "./header_style";
 
-const HeaderView = () => {
+const HeaderView = ({ email }: { email: string | undefined }) => {
   const navigation = useNavigation();
 
   const logout = () => {
@@ -17,7 +17,7 @@ const HeaderView = () => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome</Text>
+      <Text style={styles.title}>Welcome {email ?? ""}</Text>
       <TouchableOpacity onPress={logout}>
         <View style={styles.btnStyle}>
           <Text style={{ color: "white" }}>Logout</Text>

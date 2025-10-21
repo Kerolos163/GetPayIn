@@ -43,7 +43,10 @@ const LoginScreen = () => {
       });
 
       MMKV.setString(constant.token, response.data.accessToken);
-      navigation.navigate("Product");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "Product" as never, params: { email } as never }],
+      });
     } catch (err: any) {
       Toast.show({
         type: "error",

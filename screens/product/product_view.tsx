@@ -10,8 +10,11 @@ import CategoryFilterStyle from "../components/category_filter/category_filter_c
 import { setProducts } from "../../store/slices/productSlice";
 import NetInfo from "@react-native-community/netinfo";
 import HeaderView from "../components/app_header/header_view";
+import { useRoute } from "@react-navigation/native";
 
 const ProductView = () => {
+  const route = useRoute();
+  const params = (route.params as { email?: string }) || {};
   const dispatch = useDispatch();
   const data = useSelector((state: any) => state.product.products);
   const selectedCategory = useSelector(
@@ -60,7 +63,7 @@ const ProductView = () => {
 
   return (
     <View style={styles.body}>
-      <HeaderView></HeaderView>
+      <HeaderView email={params.email}></HeaderView>
       <CategoryFilterStyle></CategoryFilterStyle>
       <FlatList
         style={styles.container}

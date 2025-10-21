@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     position: "relative",
-  
   },
   image: { width: 120, height: 120, resizeMode: "cover" },
   containerInfo: {
@@ -62,6 +61,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     paddingVertical: 4,
     transform: [{ rotate: "30deg" }],
+  },
+  deleteBtn: {
+    position: "absolute",
+    top: -5,
+    right: -5,
   },
 });
 

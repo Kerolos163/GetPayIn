@@ -15,6 +15,8 @@ import Toast from "react-native-toast-message";
 import MMKV from "../../utils/MMKV";
 import { AutoLockContext } from "../../context/AutoLockContext";
 import { useContext } from "react";
+import { useDispatch } from "react-redux";
+import { isAdmin } from "../../store/slices/roleSclice";
 
 const LoginScreen = () => {
   const { resetAutoLock } = useContext(AutoLockContext);
@@ -23,11 +25,11 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const [emailErrorMessage, setemailEErrorMessage] = useState("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
+  const dispatch = useDispatch();
 
   const navigation: NavigationProp<any> = useNavigation();
 
   const handleLogin = useCallback(async () => {
-    console.log("login pressed");
     if (!email) setemailEErrorMessage("Email is required");
     if (!password) setPasswordErrorMessage("Password is required");
 
@@ -46,6 +48,9 @@ const LoginScreen = () => {
       });
 
       MMKV.setString(constant.token, response.data.accessToken);
+      if(email === constant.adminRole){
+        dispatch(isAdmin());
+      }
       navigation.reset({
         index: 0,
         routes: [{ name: "Product" as never, params: { email } as never }],

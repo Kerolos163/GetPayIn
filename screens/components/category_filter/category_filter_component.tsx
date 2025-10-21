@@ -57,12 +57,12 @@ const CategoryFilterStyle = () => {
   if (isLoading) return <ActivityIndicator></ActivityIndicator>;
 
   const handleCategoryPress = (slug: string) => {
-    resetAutoLock();
     if (slug === selectedCategory) {
       dispatch(setSelectedCategory(""));
     } else {
       dispatch(setSelectedCategory(slug));
     }
+    resetAutoLock();
   };
 
   return (

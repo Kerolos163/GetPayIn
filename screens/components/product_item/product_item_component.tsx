@@ -8,7 +8,6 @@ import MMKV from "../../../utils/MMKV";
 import constant from "../../../utils/constant";
 
 const ProductItemComponent = ({ data }: { data: ProductModel }) => {
-  console.log("User Role:", MMKV.getString(constant.userRole));
   return (
     <View style={styles.container}>
       <Image source={{ uri: data.image }} style={styles.image} />

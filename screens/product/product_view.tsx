@@ -9,6 +9,7 @@ import ProductItemComponent from "../components/product_item/product_item_compon
 import CategoryFilterStyle from "../components/category_filter/category_filter_component";
 import { setProducts } from "../../store/slices/productSlice";
 import NetInfo from "@react-native-community/netinfo";
+import HeaderView from "../components/app_header/header_view";
 
 const ProductView = () => {
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ const ProductView = () => {
 
   return (
     <View style={styles.body}>
+      <HeaderView></HeaderView>
       <CategoryFilterStyle></CategoryFilterStyle>
       <FlatList
         style={styles.container}

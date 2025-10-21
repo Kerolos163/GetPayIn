@@ -17,12 +17,12 @@ export default function MainApp() {
 
   return (
     <View style={{ flex: 1 }}>
-      {!locked && (
+      {true && (
         <NavigationContainer>
           <MyStack />
         </NavigationContainer>
       )}
-      <LockOverlayView />
+      {/* <LockOverlayView /> */}
     </View>
   );
 }

@@ -13,8 +13,11 @@ import axios from "axios";
 import constant from "../../utils/constant";
 import Toast from "react-native-toast-message";
 import MMKV from "../../utils/MMKV";
+import { AutoLockContext } from "../../context/AutoLockContext";
+import { useContext } from "react";
 
 const LoginScreen = () => {
+  const { resetAutoLock } = useContext(AutoLockContext);
   const [hidden, setHidden] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -61,6 +64,7 @@ const LoginScreen = () => {
       <KeyboardAvoidingView style={style.container} behavior="padding">
         <Text style={style.text}>welcome back</Text>
         <TextInput
+          onPress={resetAutoLock}
           style={[
             style.input,
             { borderColor: emailErrorMessage ? "red" : "#009C94" },
@@ -79,6 +83,7 @@ const LoginScreen = () => {
         )}
         <View style={style.password}>
           <TextInput
+            onPress={resetAutoLock}
             style={[
               style.input,
               {

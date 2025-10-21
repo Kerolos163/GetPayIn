@@ -19,7 +19,7 @@ export default function MainApp() {
   const locked = useSelector((state: RootState) => state.lock.locked);
   const resetAutoLock = useAutoLock(() => {
     dispatch(setLocked(true));
-  }, 10000);
+  });
 
   return (
     <AutoLockContext.Provider value={{ resetAutoLock }}>

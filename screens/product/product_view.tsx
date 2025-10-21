@@ -19,7 +19,6 @@ import { useContext } from "react";
 const ProductView = () => {
   const { resetAutoLock } = useContext(AutoLockContext);
   const route = useRoute();
-  const params = (route.params as { email?: string }) || {};
   const dispatch = useDispatch();
   const selectedCategory = useSelector(
     (state: any) => state.category.selectedCategory
@@ -69,7 +68,7 @@ const ProductView = () => {
 
   return (
     <View style={styles.body}>
-      <HeaderView email={params.email}></HeaderView>
+      <HeaderView></HeaderView>
       <CategoryFilterStyle></CategoryFilterStyle>
       <FlatList
         style={styles.container}

@@ -5,11 +5,12 @@ import constant from "../../../utils/constant";
 import { useNavigation } from "@react-navigation/native";
 import styles from "./header_style";
 
-const HeaderView = ({ email }: { email: string | undefined }) => {
+const HeaderView = () => {
   const navigation = useNavigation();
 
   const logout = () => {
     MMKV.removeItem(constant.token);
+    MMKV.removeItem(constant.userName);
     navigation.reset({
       index: 0,
       routes: [{ name: "Login" as never }],
@@ -17,7 +18,9 @@ const HeaderView = ({ email }: { email: string | undefined }) => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome {email ?? ""}</Text>
+      <Text style={styles.title}>
+        Welcome {MMKV.getString(constant.userName)}
+      </Text>
       <TouchableOpacity onPress={logout}>
         <View style={styles.btnStyle}>
           <Text style={{ color: "white" }}>Logout</Text>

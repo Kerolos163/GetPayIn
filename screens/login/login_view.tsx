@@ -16,7 +16,6 @@ import MMKV from "../../utils/MMKV";
 import { AutoLockContext } from "../../context/AutoLockContext";
 import { useContext } from "react";
 import { useDispatch } from "react-redux";
-import { isAdmin } from "../../store/slices/roleSclice";
 
 const LoginScreen = () => {
   const { resetAutoLock } = useContext(AutoLockContext);
@@ -47,13 +46,16 @@ const LoginScreen = () => {
         password,
       });
 
+      MMKV.setString(constant.userName, response.data.firstName);
+      MMKV.setString(
+        constant.userRole,
+        response.data.username === "michaelw" ? "ADMIN" : "USER"
+      );
       MMKV.setString(constant.token, response.data.accessToken);
-      if(email === constant.adminRole){
-        dispatch(isAdmin());
-      }
+
       navigation.reset({
         index: 0,
-        routes: [{ name: "Product" as never, params: { email } as never }],
+        routes: [{ name: "Product" as never }],
       });
     } catch (err: any) {
       Toast.show({

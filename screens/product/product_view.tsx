@@ -13,8 +13,11 @@ import HeaderView from "../components/app_header/header_view";
 import { useRoute } from "@react-navigation/native";
 import NoConnectionView from "../components/no_connection/no_connection_view";
 import { useQuery } from "@tanstack/react-query";
+import { AutoLockContext } from "../../context/AutoLockContext";
+import { useContext } from "react";
 
 const ProductView = () => {
+  const { resetAutoLock } = useContext(AutoLockContext);
   const route = useRoute();
   const params = (route.params as { email?: string }) || {};
   const dispatch = useDispatch();
@@ -77,6 +80,7 @@ const ProductView = () => {
           <ProductItemComponent key={item.id} data={item} />
         )}
         keyExtractor={(item) => item.id.toString()}
+        onTouchStart={resetAutoLock}
       />
     </View>
   );

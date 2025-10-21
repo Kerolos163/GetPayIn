@@ -4,7 +4,7 @@ interface LockState {
   locked: boolean;
 }
 const initialState: LockState = {
-  locked: true,
+  locked: false,
 };
 
 const lockSlice = createSlice({

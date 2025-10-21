@@ -7,35 +7,38 @@ import styles from "./category_filter_style";
 import { useDispatch, useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
 import { ActivityIndicator } from "react-native";
+import { AutoLockContext } from "../../../context/AutoLockContext";
+import { useContext } from "react";
 import {
   setSelectedCategory,
   setCategories,
 } from "../../../store/slices/categorySlice";
 
 const CategoryFilterStyle = () => {
+  const { resetAutoLock } = useContext(AutoLockContext);
   const dispatch = useDispatch();
   const selectedCategory = useSelector(
     (state: any) => state.category.selectedCategory
   );
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(
-          `${constant.baseUrl}/products/categories`
-        );
-        const categories: CategoryModel[] = response.data.map((item: any) => ({
-          slug: item.slug ?? "",
-          name: item.name ?? "",
-        }));
-        // console.warn("Categories Data👉", categories);
-        dispatch(setCategories(categories));
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-    fetchCategories();
-  }, []);
+  // useEffect(() => {
+  //   const fetchCategories = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${constant.baseUrl}/products/categories`
+  //       );
+  //       const categories: CategoryModel[] = response.data.map((item: any) => ({
+  //         slug: item.slug ?? "",
+  //         name: item.name ?? "",
+  //       }));
+  //       // console.warn("Categories Data👉", categories);
+  //       dispatch(setCategories(categories));
+  //     } catch (error) {
+  //       console.error("Error fetching categories:", error);
+  //     }
+  //   };
+  //   fetchCategories();
+  // }, []);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["categories"],
@@ -54,6 +57,7 @@ const CategoryFilterStyle = () => {
   if (isLoading) return <ActivityIndicator></ActivityIndicator>;
 
   const handleCategoryPress = (slug: string) => {
+    resetAutoLock();
     if (slug === selectedCategory) {
       dispatch(setSelectedCategory(""));
     } else {

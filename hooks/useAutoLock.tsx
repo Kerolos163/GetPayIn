@@ -13,17 +13,23 @@ const useAutoLock = (onAutoLock: () => void, autoLockTime: number = 10000) => {
     //? Set a new timer
     timerRef.current = setTimeout(() => {
       onAutoLock();
-      // resetTimer();
+      resetTimer();
     }, autoLockTime);
   };
 
   useEffect(() => {
+    console.log("useAutoLock mounted");
     //? Listen for app state changes
     const appStateListener = AppState.addEventListener(
       "change",
       (nextAppState) => {
+        console.log("AppState", nextAppState);
         if (nextAppState == "background") {
           onAutoLock();
+
+          if (timerRef.current) {
+            clearTimeout(timerRef.current);
+          }
         } else if (nextAppState == "active") {
           resetTimer();
         }
@@ -38,7 +44,8 @@ const useAutoLock = (onAutoLock: () => void, autoLockTime: number = 10000) => {
         clearTimeout(timerRef.current);
       }
     };
-  }, []);
+  }, [onAutoLock, autoLockTime]);
+  return resetTimer;
 };
 
 export default useAutoLock;

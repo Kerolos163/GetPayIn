@@ -16,6 +16,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingBottom: 50,
   },
+  errorText: {
+    color: "red",
+    fontSize: 18,
+    textAlign: "center",
+  }
 });
 
 export default styles;

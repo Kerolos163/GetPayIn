@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useEffect } from "react";
-import { View, FlatList, Image } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, FlatList, ActivityIndicator, Text } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import constant from "../../utils/constant";
@@ -11,23 +11,27 @@ import { setProducts } from "../../store/slices/productSlice";
 import NetInfo from "@react-native-community/netinfo";
 import HeaderView from "../components/app_header/header_view";
 import { useRoute } from "@react-navigation/native";
+import NoConnectionView from "../components/no_connection/no_connection_view";
+import { useQuery } from "@tanstack/react-query";
 
 const ProductView = () => {
   const route = useRoute();
   const params = (route.params as { email?: string }) || {};
   const dispatch = useDispatch();
-  const data = useSelector((state: any) => state.product.products);
   const selectedCategory = useSelector(
     (state: any) => state.category.selectedCategory
   );
   const [isConnected, setIsConnected] = useState(true);
 
   useEffect(() => {
-    console.log("isConnected", isConnected);
     const unsubscribe = NetInfo.addEventListener((state) => {
       setIsConnected(state.isConnected ?? false);
     });
-    const fetchData = async () => {
+  }, [isConnected, selectedCategory]);
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["products", selectedCategory],
+    queryFn: async () => {
       const response = await axios.get(`${constant.baseUrl}/products`);
       const products: ProductModel[] = response.data.products
         .filter(
@@ -45,21 +49,20 @@ const ProductView = () => {
         }));
 
       dispatch(setProducts(products));
-      return () => unsubscribe();
-    };
-    fetchData();
-  }, [isConnected, selectedCategory]);
+      return products;
+    },
+  });
 
-  if (!isConnected) {
+  // if (!isConnected) return <NoConnectionView></NoConnectionView>;
+
+  if (isLoading) return <ActivityIndicator></ActivityIndicator>;
+
+  if (isError)
     return (
       <View style={styles.body}>
-        <Image
-          source={require("../../assets/No connection-bro.png")}
-          style={{ width: "100%", height: "100%", resizeMode: "contain" }}
-        />
+        <Text style={styles.errorText}>Error loading products</Text>
       </View>
     );
-  }
 
   return (
     <View style={styles.body}>

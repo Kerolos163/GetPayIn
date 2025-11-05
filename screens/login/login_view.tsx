@@ -80,6 +80,7 @@ const LoginScreen = () => {
           placeholder="Email"
           value={email}
           onChangeText={(e) => {
+            resetAutoLock();
             setEmail(e);
           }}
         ></TextInput>
@@ -102,6 +103,7 @@ const LoginScreen = () => {
             secureTextEntry={hidden}
             value={password}
             onChangeText={(e) => {
+              resetAutoLock();
               setPassword(e);
             }}
           ></TextInput>
@@ -109,6 +111,7 @@ const LoginScreen = () => {
           <TouchableOpacity
             style={{ position: "absolute", right: 18, top: 32 }}
             onPress={() => {
+              resetAutoLock();
               setHidden(!hidden);
             }}
           >
